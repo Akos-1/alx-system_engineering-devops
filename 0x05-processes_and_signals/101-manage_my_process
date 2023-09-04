@@ -7,6 +7,7 @@ then
         ./manage_my_process &
         echo $$ > /var/run/my_process.pid
         echo "manage_my_process started"
+
 elif [ "$1" == "stop" ]
 then
         kill "$(pgrep -f ./manage_my_process)"
