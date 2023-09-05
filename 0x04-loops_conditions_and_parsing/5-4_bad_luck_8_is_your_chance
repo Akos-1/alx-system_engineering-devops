@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#a Bash script that loops from 1 to 10
+
+count=1
+
+while [ $count -le 10 ];
+do
+    if [ $count -eq 9 ];
+    then
+       echo "Best School"
+       echo "Hi"
+    else
+       echo "Best School"
+    fi
+    ((count++))
+done
