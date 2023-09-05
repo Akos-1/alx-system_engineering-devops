@@ -19,5 +19,5 @@ do
             echo $count
             ;;
     esac
-    count=$((count + 1))
+    ((count++))
 done
