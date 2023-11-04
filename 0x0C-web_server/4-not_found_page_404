@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Update package list
+sudo apt update
+
+# Install Nginx
+sudo apt install -y nginx
+
+# Create Hello World HTML file
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Configure Nginx for redirect
+nginx_config="/etc/nginx/sites-enabled/default"
+sudo cp "$nginx_config" "$nginx_config.backup"
+
+# Define the string for replacement
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.afriyie.tech permanent;"
+
+# Use sed to replace the specified string
+sudo sed -i "s/server_name _;/$string_for_replacement/" "$nginx_config"
+
+# Restart Nginx to apply changes
+sudo service nginx restart
