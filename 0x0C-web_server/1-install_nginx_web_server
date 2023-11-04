@@ -6,14 +6,14 @@ sudo apt update
 sudo apt install -y nginx
 
 # Create a basic HTML file with Hello World!
-echo "<html><body>Hello World!</body></html>" | sudo tee /var/www/html/index.html
+echo "<html><body>Hello World!</body></html>" | sudo tee /tmp/correction/7839989442403981152456929471021674270781_5/266/397815/0x0C-web_server/output/index.html
 
 # Replace the default Nginx configuration with a custom one
 echo "server {
     listen 80;
     server_name _;
     location / {
-        root /var/www/html;
+        root /tmp/correction/7839989442403981152456929471021674270781_5/266/397815/0x0C-web_server/output;
         index index.html;
     }
 }" | sudo tee /etc/nginx/sites-available/default
