@@ -1,22 +1,18 @@
 #!/usr/bin/env bash
-# Update package list
-sudo apt update
+# Configure your Nginx server to have a custom 404 page
 
-# Install Nginx
-sudo apt install -y nginx
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Create Hello World HTML file
+# code to redirect a specific endpoint
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
-# Configure Nginx for redirect
-nginx_config="/etc/nginx/sites-enabled/default"
-sudo cp "$nginx_config" "$nginx_config.backup"
-
-# Define the string for replacement
 string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.afriyie.tech permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Use sed to replace the specified string
-sudo sed -i "s/server_name _;/$string_for_replacement/" "$nginx_config"
+# code to create error page and add a redirect for error 404
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Restart Nginx to apply changes
+# restart the server
 sudo service nginx restart
