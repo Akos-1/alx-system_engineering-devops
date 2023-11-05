@@ -1,24 +1,11 @@
 #!/usr/bin/env bash
-#a Bash script containing commands to automatically configure a Ubuntu machine
+# A bash script that configures a new Ubuntu machine to respect above requirements
 
-# Update package list
-sudo apt update
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Install Nginx
-sudo apt install -y nginx
-
-# Create Hello World HTML file
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
-# Configure Nginx for redirect
-nginx_config="/etc/nginx/sites-enabled/default"
-sudo cp "$nginx_config" "$nginx_config.backup"
-
-# Define the string for replacement
 string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.afriyie.tech permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Use sed to replace the specified string
-sudo sed -i "s/server_name _;/$string_for_replacement/" "$nginx_config"
-
-# Restart Nginx to apply changes
 sudo service nginx restart
