@@ -4,10 +4,10 @@
 sudo apt-get update
 sudo apt-get install -y nginx
 
-#code to redirect a specific endpoint
+# code to redirect a specific endpoint
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-#code for redirection
+# code for redirection
 string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.afriyie.tech permanent;"
 
 sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
