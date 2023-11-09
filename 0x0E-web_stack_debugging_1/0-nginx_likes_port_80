@@ -2,25 +2,12 @@
 # Script: configure_server.sh
 # Description: Configures an Nginx server on Ubuntu 20.04 LTS
 
-# Update package information
-sudo apt update
-
-# Install Nginx if not installed
-sudo apt install -y nginx
-
-# Check if Nginx is running
-if ! systemctl is-active --quiet nginx; then
-    sudo systemctl start nginx
-fi
+#Install Nginx if not installed
+sudo systemctl start nginx
 
 # Check if Nginx is listening on port 80
-if ! sudo netstat -tulpn | grep -q :80; then
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo ln -s -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-    # Update Nginx configuration
-    sudo sed -i 's/listen 80;/listen 80;/g' /etc/nginx/sites-available/default
-
-    # Restart Nginx
-    sudo systemctl restart nginx
-fi
-
-echo "Nginx is now configured to listen on port 80."
+#Restart Nginx
+sudo systemctl restart nginx
