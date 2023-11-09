@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# a Bash script that configures a server
+# Script: configure_server.sh
+# Description: Configures an Nginx server on Ubuntu 20.04 LTS
+
+# Update package information
+sudo apt update
 
 # Install Nginx if not installed
-sudo apt update
 sudo apt install -y nginx
 
 # Check if Nginx is running
@@ -13,10 +16,10 @@ fi
 # Check if Nginx is listening on port 80
 if ! sudo netstat -tulpn | grep -q :80; then
 
-# Update Nginx configuration
+    # Update Nginx configuration
     sudo sed -i 's/listen 80;/listen 80;/g' /etc/nginx/sites-available/default
 
-# Restart Nginx
+    # Restart Nginx
     sudo systemctl restart nginx
 fi
 
