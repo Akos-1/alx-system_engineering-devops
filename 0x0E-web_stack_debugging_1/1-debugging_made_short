@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-sudo apt update
-sudo apt install -y nginx
-sudo sed -i 's/listen 80;/listen 80;/g' /etc/nginx/sites-available/default
-sudo systemctl start nginx || echo "nginx is not running"
+# for Nginx to listen on port 80
+sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+sudo service nginx restart
+sudo pkill -o nginx
