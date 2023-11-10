@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# A Bash script that will display information about subdomains.
+
+dns_config () {
+    local subdomain="$2"
+    local domain="$1"
+    local result=$(dig "$subdomain.$domain" +short)
+    local record=$(dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | awk 'NR==2{print $1}')
+    
+    if [ -n "$result" ]; then
+        echo "The subdomain $subdomain is a $record record and points to $result"
+    else
+        echo "The subdomain $subdomain does not exist for $domain"
+    fi
+}
+
+if [ "$#" == 1 ]; then
+    dns_config "$1" "www"
+    dns_config "$1" "lb-01"
+    dns_config "$1" "web-01"
+    dns_config "$1" "web-02"
+elif [ "$#" == 2 ]; then
+    dns_config "$1" "$2"
+fi
