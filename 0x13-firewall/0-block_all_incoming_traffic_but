@@ -11,6 +11,7 @@ sudo ufw default deny incoming
 # Set default outgoing policy to allow
 sudo ufw default allow outgoing
 
+# Stop the policy
 sudo systemctl stop ufw
 
 # Allow incoming traffic on specific ports
