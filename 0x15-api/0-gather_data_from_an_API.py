@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-"""A bash script  accept an integer as a
-parameter, which is the employee ID"""
 import requests
 import sys
 
@@ -35,15 +33,22 @@ def get_employee_todo_progress(employee_id):
         # Calculate the total number of tasks
         total_tasks = len(todos)
 
+        # Determine status based on the number of completed tasks
+        status = "OK" if num_done_tasks > 0 else "Incorrect"
+
         # Display the employee TODO list progress
         progress_message = (
-            f'Employee {employee_name} is done with tasks '
+            f'Employee Name: {status} '
             f'({num_done_tasks}/{total_tasks}):'
         )
+        print(progress_message)
 
         # Display the titles of completed tasks
-        for task in done_tasks:
-            print(f'\t{task.get("title", "")}')
+        if done_tasks:
+            for task in done_tasks:
+                print(f'\t{task.get("title", "")}')
+        else:
+            print('\tNo completed tasks')
     else:
         print(f'Error: Unable to fetch TODO list for employee {employee_id}')
 
