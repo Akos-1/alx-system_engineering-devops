@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""A bash script accept an integer as a
+parameter, which is the employee ID"""
 import requests
 import sys
 
