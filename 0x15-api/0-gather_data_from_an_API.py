@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""A bash script  accept an integer as a
+parameter, which is the employee ID"""
 import requests
 import sys
 
@@ -34,7 +36,10 @@ def get_employee_todo_progress(employee_id):
         total_tasks = len(todos)
 
         # Display the employee TODO list progress
-        print(f'Employee {employee_name} is done with tasks ({num_done_tasks}/{total_tasks}):')
+        progress_message = (
+            f'Employee {employee_name} is done with tasks '
+            f'({num_done_tasks}/{total_tasks}):'
+        )
 
         # Display the titles of completed tasks
         for task in done_tasks:
