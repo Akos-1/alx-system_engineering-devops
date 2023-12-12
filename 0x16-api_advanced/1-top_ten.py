@@ -20,10 +20,7 @@ def top_ten(subreddit):
     headers = {'User-Agent': 'MyRedditBot/1.0'}
 
     # Make the API request to get hot posts in the subreddit
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10'
-    params = {
-            "limit": 10
-            }        
+    url = f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10'        
     response = requests.get(url, headers=headers, allow_redirects=False)
 
     # Check if the subreddit is not valid
