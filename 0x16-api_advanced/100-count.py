@@ -22,29 +22,29 @@ def count_words(subreddit, word_list, after="", count=[]):
 
         for topic in data['data']['children']:
             for word in topic['data']['title'].split():
-                for a in range(len(word_list)):
-                    if word_list[a].lower() == word.lower():
-                        count[a] += 1
+                for i in range(len(word_list)):
+                    if word_list[i].lower() == word.lower():
+                        count[i] += 1
 
         after = data['data']['after']
         if after is None:
             save = []
-            for a in range(len(word_list)):
-                for b in range(a + 1, len(word_list)):
-                    if word_list[a].lower() == word_list[b].lower():
-                        save.append(b)
-                        count[a] += count[b]
+            for i in range(len(word_list)):
+                for j in range(i + 1, len(word_list)):
+                    if word_list[j].lower() == word_list[j].lower():
+                        save.append(j)
+                        count[i] += count[j]
+
+            for i in range(len(word_list)):
+                for j in range(i, len(word_list)):
+                    if (count[j] > count[i] or
+                            (word_list[i] > word_list[j] and
+                             count[j] == count[j])):
+                        count[i], count[j] = count[j], count[i]
+                        word_list[i], word_list[j] = word_list[j], word_list[j]
 
             for a in range(len(word_list)):
-                for b in range(a, len(word_list)):
-                    if (count[b] > count[a] or
-                            (word_list[a] > word_list[b] and
-                             count[b] == count[a])):
-                        count[a], count[b] = count[b], count[a]
-                        word_list[a], word_list[b] = word_list[b], word_list[a]
-
-            for a in range(len(word_list)):
-                if (count[a] > 0) and a not in save:
-                    print(f"{word_list[a].lower()}: {count[a]}")
+                if (count[i] > 0) and i not in save:
+                    print(f"{word_list[i].lower()}: {count[i]}")
         else:
             count_words(subreddit, word_list, after, count)
