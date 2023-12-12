@@ -1,50 +1,53 @@
 #!/usr/bin/python3
 """a recursive function that queries the Reddit API"""
 
-import json
 import requests
 
 
-def count_words(subreddit, word_list, after="", count=[]):
+def count_words(subreddit, word_list, after="", count=None):
     """all words are counted"""
 
     if after == "":
         count = [0] * len(word_list)
 
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    rquest = requests.get(
-            url,
-            params={'after': after},
-            headers={'User-Agent': 'MyRedditBot/1.0'}
-            allow_redirects=False)
-    if request.status_code == 200:
-        data = request.json()
+    headers = {'User-Agent': 'MyRedditBot/1.0'}
+    params = {'after': after}
+    response = requests.get(url, params=params, allow_redirects=False, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
 
         for topic in data['data']['children']:
             for word in topic['data']['title'].split():
-                for i in range(len(word_list)):
-                    if word_list[i].lower() == word.lower():
-                        count[i] += 1
+                for a in range(len(word_list)):
+                    if word_list[a].lower() == word.lower():
+                        count[a] += 1
 
         after = data['data']['after']
         if after is None:
             save = []
-            for i in range(len(word_list)):
-                for j in range(i + 1, len(word_list)):
-                    if word_list[j].lower() == word_list[j].lower():
-                        save.append(j)
-                        count[i] += count[j]
-
-            for i in range(len(word_list)):
-                for j in range(i, len(word_list)):
-                    if (count[j] > count[i] or
-                            (word_list[i] > word_list[j] and
-                             count[j] == count[j])):
-                        count[i], count[j] = count[j], count[i]
-                        word_list[i], word_list[j] = word_list[j], word_list[j]
+            for a in range(len(word_list)):
+                for b in range(a + 1, len(word_list)):
+                    if word_list[a].lower() == word_list[b].lower():
+                        save.append(b)
+                        count[a] += count[b]
 
             for a in range(len(word_list)):
-                if (count[i] > 0) and i not in save:
-                    print(f"{word_list[i].lower()}: {count[i]}")
+                for b in range(a, len(word_list)):
+                    if (count[b] > count[a] or
+                            (word_list[a] > word_list[b] and
+                             count[b] == count[a])):
+                        # Original three-line swap
+                        aux = count[a]
+                        count[a] = count[b]
+                        count[b] = aux
+                        aux = word_list[a]
+                        word_list[a] = word_list[b]
+                        word_list[b] = aux
+
+            for a in range(len(word_list)):
+                if (count[a] > 0) and a not in save:
+                    print(f"{word_list[a].lower()}: {count[a]}")
         else:
             count_words(subreddit, word_list, after, count)
