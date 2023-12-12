@@ -4,9 +4,10 @@ Recursive function to query Reddit API and for a subreddit.
 """
 
 import requests
+after = None
 
 
-def recurse(subreddit, hot_list=None, after=None):
+def recurse(subreddit, hot_list=[]):
     """
     Recursively query Reddit API to get titles of all
     hot articles for a given subreddit.
@@ -20,6 +21,7 @@ def recurse(subreddit, hot_list=None, after=None):
         list: List containing titles of hot articles,
         or None if no results are found.
     """
+    global after
     # Set a custom User-Agent to avoid Too Many Requests error
     headers = {'User-Agent': 'MyRedditBot/1.0'}
 
