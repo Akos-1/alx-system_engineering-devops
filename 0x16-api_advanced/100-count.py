@@ -13,14 +13,10 @@ def count_words(subreddit, word_list, after="", count=[]):
 
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {'User-Agent': 'MyRedditBot/1.0'}
-    params = {'after': after}
-    results = requests.get(
-        url,
-        params=params,
-        headers=user_agent,
-        allow_redirects=False
-    )
-
+    results = requests.get(url,
+                           params={'after': after},
+                           headers=user_agent,
+                           allow_redirects=False)
     if response.status_code == 200:
         data = response.json()
 
