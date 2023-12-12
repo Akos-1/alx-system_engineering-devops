@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """a recursive function that queries the Reddit API"""
 
+import json
 import requests
 
 
-def count_words(subreddit, word_list, after="", count=None):
+def count_words(subreddit, word_list, after="", count=[]):
     """all words are counted"""
 
     if after == "":
