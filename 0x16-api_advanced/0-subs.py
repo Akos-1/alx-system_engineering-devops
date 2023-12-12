@@ -23,17 +23,8 @@ def number_of_subscribers(subreddit):
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     response = requests.get(url, headers=headers)
 
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the JSON response to get the number of subscribers
-        data = response.json()
-        subscribers = data['data']['subscribers']
-        return subscribers
-    elif response.status_code == 404:
-        # Invalid subreddit returns a 404 status code
-        print(f"The subreddit '{subreddit}' does not exist.")
+    # Invalid subreddit returns a 404 status code
+    if response.status_code == 404:
         return 0
-    else:
-        # Handle other errors
-        print(f"Error: {response.status_code}")
-        return 0
+    results = response.json().get("data")
+    return results.get("subscribers")
